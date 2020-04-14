@@ -1,8 +1,10 @@
 const express = require('express');
+const cors = require('cors');
 const {uuid, isUuid} = require('uuidv4');
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
  
 const projects = [];
@@ -31,7 +33,7 @@ function validateProjectId(request, response, next){
 app.use(logRequests);
 app.use('/projects/:id', validateProjectId);
 
-app.get('projects',(request, response)=>{
+app.get('/projects',(request, response)=>{
   const {title} = request.query;
 
   const results = title 
@@ -41,7 +43,7 @@ app.get('projects',(request, response)=>{
   return response.json(results);
 });
 
-app.post('projects',(request, response)=>{
+app.post('/projects',(request, response)=>{
   const {title,owner} = request.body;
   
   
